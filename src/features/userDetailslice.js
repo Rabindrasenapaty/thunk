@@ -1,0 +1,73 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+
+//create action
+export const createUser = createAsyncThunk("createduser", async (data, { rejectWithValue }) => {
+
+    const response = await fetch('https://68760679814c0dfa653a48e1.mockapi.io/crud', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }
+    );
+    try {
+        const result = await response.json()
+        return result
+
+
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+
+})
+
+//read action
+export const showUser = createAsyncThunk("showUser", async (_,{ rejectWithValue }) => {
+    const response = await fetch("https://68760679814c0dfa653a48e1.mockapi.io/crud");
+    try {
+        const result = await response.json()
+        return result
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+})
+
+export const userDetail = createSlice({
+    name: "userDetail",
+    initialState: {
+        users: [],
+        loading: false,
+        error: null
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(createUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users.push(action.payload);
+            })
+            .addCase(createUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(showUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(showUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users=action.payload;
+            })
+            .addCase(showUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+    }
+})
+
+export default userDetail.reducer
