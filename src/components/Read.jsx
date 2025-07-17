@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showUser } from '../features/userDetailslice';
 import CustomModal from './customModel';
 import { deleteUser } from '../features/userDetailslice';
+import {Link} from 'react-router-dom'
 
 const Read = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,22 @@ const Read = () => {
   }, []);
 
 
-  if (loading){
-    return <h2>Loading</h2>
-  }
+ if (loading) {
+  return (
+    <div className="flex justify-center items-center h-screen bg-gray-50">
+      <div className="flex flex-col items-center space-y-4">
+        {/* Spinner */}
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        
+        {/* Loading Text */}
+        <h2 className="text-xl font-semibold text-gray-700 animate-pulse">
+          Please wait, loading...
+        </h2>
+      </div>
+    </div>
+  );
+}
+
 
 
 
@@ -54,9 +68,9 @@ const Read = () => {
               >
                 👁️ View
               </button>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md text-sm shadow">
+              <Link className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md text-sm shadow" to={`/edit/${user.id}`}>
                 ✏️ Edit
-              </button>
+              </Link>
               <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm shadow" onClick={()=>{dispatch(deleteUser(user.id))}}>
                 🗑️ Delete
               </button>
