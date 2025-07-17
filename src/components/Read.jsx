@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showUser } from '../features/userDetailslice';
 import CustomModal from './customModel';
+import { deleteUser } from '../features/userDetailslice';
 
 const Read = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const Read = () => {
               <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md text-sm shadow">
                 ✏️ Edit
               </button>
-              <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm shadow">
+              <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm shadow" onClick={()=>{dispatch(deleteUser(user.id))}}>
                 🗑️ Delete
               </button>
             </div>
