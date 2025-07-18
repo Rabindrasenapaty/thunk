@@ -14,6 +14,8 @@ const Read = () => {
   const [id,setid]=useState("")
   const [showpop,setshowpop]=useState(false)
 
+  const [filtergender,setfiltergender]=useState('')
+
   useEffect(() => {
     dispatch(showUser());
   }, []);
@@ -40,7 +42,47 @@ const Read = () => {
 
   return (
     
+    
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-6">
+            {/* 🔘 Gender Filter */}
+      <div className="flex justify-center space-x-6 mb-8">
+        <label className="text-gray-700 font-medium">
+          <input
+            type="radio"
+            name="gender"
+            value="all"
+            checked={filtergender===""}
+            onChange={(e)=>setfiltergender(e.target.value)}
+           
+            className="mr-2"
+          />
+          All
+        </label>
+        <label className="text-gray-700 font-medium">
+          <input
+            type="radio"
+            name="gender"
+            value="male"
+            checked={filtergender==="male"}
+            onChange={(e)=>setfiltergender(e.target.value)}
+            
+            className="mr-2"
+          />
+          Male
+        </label>
+        <label className="text-gray-700 font-medium">
+          <input
+            type="radio"
+            name="gender"
+            value="female"
+            checked={filtergender==="female"}
+            onChange={(e)=>setfiltergender(e.target.value)}
+           
+            className="mr-2"
+          />
+          Female
+        </label>
+      </div>
       {/* ✅ Modal Component */}
       {showpop && <CustomModal id={id} showpop={showpop} setshowpop={setshowpop}/>}
 
@@ -56,6 +98,17 @@ const Read = () => {
             return ele.name.toLowerCase().includes(searchData.toLowerCase())
           }
         }) 
+        .filter((ele)=>{
+          if (filtergender==="male"){
+            return ele.gender===filtergender
+          }
+          else if (filtergender==='female'){
+            return ele.gender===filtergender
+          }
+          else{
+            return ele
+          }
+        })
         
         .map((user) => (
           <div
