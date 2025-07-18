@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showUser } from '../features/userDetailslice';
-import CustomModal from './customModel';
+import CustomModal from './CustomModel';
 import { deleteUser } from '../features/userDetailslice';
 import { Link } from 'react-router-dom'
 
