@@ -5,10 +5,11 @@ import CustomModal from './customModel';
 import { deleteUser } from '../features/userDetailslice';
 import {Link} from 'react-router-dom'
 
+
 const Read = () => {
   const dispatch = useDispatch();
   
-  const {users,loading}=useSelector((state)=>state.app)
+  const {users,loading,searchData}=useSelector((state)=>state.app)
 
   const [id,setid]=useState("")
   const [showpop,setshowpop]=useState(false)
@@ -46,7 +47,17 @@ const Read = () => {
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">User Profiles</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {users && users.map((user) => (
+        {users &&
+        users.filter((ele)=>{
+          if(searchData.length===0){
+            return ele
+          }
+          else{
+            return ele.name.toLowerCase().includes(searchData.toLowerCase())
+          }
+        }) 
+        
+        .map((user) => (
           <div
             key={user.id}
             className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300 border border-gray-100"

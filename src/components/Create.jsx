@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
 
-    const [users,setusers]=useState({});
+    const [users,setusers]=useState({
+      gender: 'male'
+    });
     const navigate=useNavigate()
 
     const dispatch=useDispatch();
@@ -86,6 +88,7 @@ const Create = () => {
                   name="gender"
                   value="male"
                   onChange={handleChange}
+                  checked={users.gender === 'male'}
                   className="mr-2 accent-blue-600"
                 />
                 Male
@@ -96,6 +99,7 @@ const Create = () => {
                   name="gender"
                   value="female"
                   onChange={handleChange}
+                  checked={users.gender === 'female'}
                   className="mr-2 accent-pink-500"
                 />
                 Female
